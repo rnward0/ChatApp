@@ -1,3 +1,5 @@
+//The basic Socket.io code was provided by the tutorial in the assignment description at https://socket.io/get-started/chat/
+
 var express = require('express');
 
 var app = require('express')();
@@ -45,7 +47,7 @@ io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
         if(msg.includes('/name')){
             if(!msg.includes('<') || !msg.includes('>')){
-                io.to(socket.id).emit('chat message', 'Error: Invalid command', true);
+                io.to(socket.id).emit('chat message', 'Error: Invalid command.', true);
             }
             else {
                 var start = msg.indexOf('<') + 1;
@@ -68,6 +70,9 @@ io.on('connection', (socket) => {
                     io.to(socket.id).emit('chat message', 'Your username is now ' + userList[index], true);
                 }
             }
+        }
+        else if(msg.includes('/')){
+            io.to(socket.id).emit('chat message', 'Error: Invalid command.', true);
         }
         else{
             var time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
